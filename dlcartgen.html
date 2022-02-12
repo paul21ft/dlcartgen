@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Delta Cart Generator for ITA Matrix</title>
+</head>
+<body>
+<h2>
+    Go find your flights here: <br>
+    <a href="https://matrix.itasoftware.com">https://matrix.itasoftware.com</a>
+</h2>
+<p>Click the Copy itinerary as JSON and paste into the box below.</p>
+<br>
+
+    Select Cabin:
+<input type="text" id="cabin" name="cabin" value="ECONOMY"><br>
+<button onclick="getElementById('cabin').value='BASIC-ECONOMY'">BASIC-ECONOMY</button>
+<button onclick="getElementById('cabin').value='ECONOMY'">ECONOMY</button>
+<button onclick="getElementById('cabin').value='COMFORT-PLUS'">COMFORT-PLUS</button>
+<button onclick="getElementById('cabin').value='PREMIUM-PLUS'">PREMIUM-PLUS</button>
+<button onclick="getElementById('cabin').value='BUSINESS-FIRST'">BUSINESS-FIRST</button>
+<button onclick="getElementById('cabin').value='FIRST'">FIRST (INTL)</button>
+<br>
+You can edit this manually to fix up the cabin selected.<br><br><br>
+Select Trip Type:
+<input type="text" id="triptype" name="triptype" value="roundTrip"><br>
+<button onclick="getElementById('triptype').value='roundTrip'">roundTrip</button>
+<button onclick="getElementById('triptype').value='oneWay'">oneWay</button>
+<button onclick="getElementById('triptype').value='multiCity'">multiCity</button>
+<br>
+You can edit this manually to fix up the cabin selected.<br><br>
+
+JSON Copied:
+<input type="text" id="input_flight_json" name="input_flight_json"><br>
+<button onclick="generateLink()">Generate Link</button>
+<button onclick="document.getElementById('input_flight_json').value=''">Clear</button>
+
+    <p id="link">Link:</p>
+<br>
+Enjoy!
+<script>
+    function getHourString(in24hr) {
+        if (in24hr < 12) {
+            let prefix = "";
+            if (in24hr < 10) {
+                prefix = "0";
+            }
+            return (in24hr.toString() + "A");
+        }
+        if (in24hr === 12) {
+            return "12P";
+        }
+        in24hr -= 12;
+        let prefix = "";
+        if (in24hr < 10) {
+            prefix = "0";
+        }
+        return prefix + in24hr.toString() + "P";
+    }
+
+    function getMonthString(monthnum) {
+        const month_names_short = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+        return month_names_short[monthnum];
+    }
+function generateLink() {
+    let input_json = document.getElementById("input_flight_json").value;
+    //const input_json = "{\"ext\":{\"totalPrice\":\"USD955.20\"},\"itinerary\":{\"distance\":{\"units\":\"MI\",\"value\":4509},\"slices\":[{\"destination\":{\"city\":{\"name\":\"Los Angeles\"},\"code\":\"LAX\",\"name\":\"Los Angeles International\"},\"origin\":{\"city\":{\"name\":\"Atlanta\"},\"code\":\"ATL\",\"name\":\"Atlanta Hartsfield-Jackson International\"},\"segments\":[{\"bookingInfos\":[{\"bookingCode\":\"T\",\"cabin\":\"COACH\"}],\"carrier\":{\"code\":\"DL\",\"shortName\":\"Delta\"},\"destination\":{\"city\":{\"name\":\"Los Angeles\"},\"code\":\"LAX\"},\"flight\":{\"number\":1151},\"legs\":[{\"aircraft\":{\"shortName\":\"Boeing 757\"},\"destination\":{\"city\":{\"name\":\"Los Angeles\"},\"code\":\"LAX\",\"name\":\"Los Angeles International\"},\"origin\":{\"city\":{\"name\":\"Atlanta\"},\"code\":\"ATL\"},\"services\":[{\"amenities\":[\"Entertainment on demand\",\"Live TV\",\"In-seat Video Player/Library\",\"Wi-Fi\",\"110V AC Power\",\"USB Power\",\"Amenities subject to change\"],\"meals\":[\"Refreshments for Purchase\"]}],\"arrival\":\"2022-02-25T21:40-08:00\",\"departure\":\"2022-02-25T19:40-05:00\",\"duration\":300}],\"origin\":{\"city\":{\"name\":\"Atlanta\"},\"code\":\"ATL\"},\"arrival\":\"2022-02-25T21:40-08:00\",\"departure\":\"2022-02-25T19:40-05:00\",\"duration\":300}],\"arrival\":\"2022-02-25T21:40-08:00\",\"departure\":\"2022-02-25T19:40-05:00\",\"stopCount\":0},{\"destination\":{\"city\":{\"name\":\"Atlanta\"},\"code\":\"ATL\",\"name\":\"Atlanta Hartsfield-Jackson International\"},\"ext\":{\"warnings\":\"LONG_LAYOVER,OVERNIGHT\"},\"origin\":{\"city\":{\"name\":\"Los Angeles\"},\"code\":\"LAX\",\"name\":\"Los Angeles International\"},\"segments\":[{\"bookingInfos\":[{\"bookingCode\":\"Q\",\"cabin\":\"COACH\"}],\"carrier\":{\"code\":\"DL\",\"shortName\":\"Delta\"},\"connection\":{\"duration\":131},\"destination\":{\"city\":{\"name\":\"Detroit\"},\"code\":\"DTW\"},\"flight\":{\"number\":1254},\"legs\":[{\"aircraft\":{\"shortName\":\"Airbus A321\"},\"destination\":{\"city\":{\"name\":\"Detroit\"},\"code\":\"DTW\",\"name\":\"Detroit Metropolitan Wayne County\"},\"origin\":{\"city\":{\"name\":\"Los Angeles\"},\"code\":\"LAX\"},\"services\":[{\"amenities\":[\"Entertainment on demand\",\"Live TV\",\"In-seat Video Player/Library\",\"Wi-Fi\",\"110V AC Power\",\"USB Power\",\"Amenities subject to change\"]}],\"arrival\":\"2022-02-28T05:19-05:00\",\"departure\":\"2022-02-27T22:00-08:00\",\"duration\":259}],\"origin\":{\"city\":{\"name\":\"Los Angeles\"},\"code\":\"LAX\"},\"arrival\":\"2022-02-28T05:19-05:00\",\"departure\":\"2022-02-27T22:00-08:00\",\"duration\":259},{\"bookingInfos\":[{\"bookingCode\":\"K\",\"cabin\":\"COACH\"}],\"carrier\":{\"code\":\"DL\",\"shortName\":\"Delta\"},\"destination\":{\"city\":{\"name\":\"Atlanta\"},\"code\":\"ATL\"},\"flight\":{\"number\":305},\"legs\":[{\"aircraft\":{\"shortName\":\"Airbus A350\"},\"destination\":{\"city\":{\"name\":\"Atlanta\"},\"code\":\"ATL\",\"name\":\"Atlanta Hartsfield-Jackson International\"},\"origin\":{\"city\":{\"name\":\"Detroit\"},\"code\":\"DTW\"},\"services\":[{\"amenities\":[\"Entertainment on demand\",\"In-seat Video Player/Library\",\"Wi-Fi\",\"Lie-flat Seat Business\",\"110V AC Power\",\"USB Power\",\"Amenities subject to change\"]}],\"arrival\":\"2022-02-28T09:50-05:00\",\"departure\":\"2022-02-28T07:30-05:00\",\"duration\":140}],\"origin\":{\"city\":{\"name\":\"Detroit\"},\"code\":\"DTW\"},\"arrival\":\"2022-02-28T09:50-05:00\",\"departure\":\"2022-02-28T07:30-05:00\",\"duration\":140}],\"arrival\":\"2022-02-28T09:50-05:00\",\"departure\":\"2022-02-27T22:00-08:00\",\"stopCount\":1}]},\"pricings\":[{\"ext\":{\"pax\":{\"adults\":1},\"totalPrice\":\"USD955.20\"},\"displayPrice\":\"USD955.20\"}],\"tickets\":[{\"pricings\":[{\"ext\":{\"pax\":{\"adults\":1},\"taxTotals\":[{\"tax\":{\"key\":\"0/0\",\"name\":\"US Transportation Tax\"},\"code\":\"US\",\"totalDisplayPrice\":\"USD63.98\"},{\"tax\":{\"key\":\"0/3\",\"name\":\"US Passenger Facility Charge\"},\"code\":\"XF\",\"totalDisplayPrice\":\"USD13.50\"},{\"tax\":{\"key\":\"0/4\",\"name\":\"United States Flight Segment Tax Domestic\"},\"code\":\"ZP\",\"totalDisplayPrice\":\"USD13.50\"},{\"tax\":{\"key\":\"0/5\",\"name\":\"United States Passenger Civil Aviation Security Service Fee\"},\"code\":\"AY\",\"totalDisplayPrice\":\"USD11.20\"}],\"totalPrice\":\"USD955.20\"},\"fareCalculations\":[{\"lines\":[\"ATL DL LAX 165.58TAUSA0ME DL X/DTT 423.25QF7OA0MQ DL ATL 264.19KAUQA0MQ USD 853.02 END ZP ATL LAX DTW XT 63.98US 13.50ZP 11.20AY 13.50XF ATL4.50 LAX4.50 DTW4.50\"]}],\"fares\":[{\"bookingInfos\":[{\"segment\":{\"destination\":\"LAX\",\"origin\":\"ATL\"},\"bookingCode\":\"T\",\"cabin\":\"COACH\"}],\"ptcs\":[\"ADT\"],\"carrier\":\"DL\",\"code\":\"TAUSA0ME\",\"destinationCity\":\"LAX\",\"displayAdjustedPrice\":\"USD165.58\",\"key\":\"0/0\",\"originCity\":\"ATL\",\"tag\":\"ONE-WAY\"},{\"bookingInfos\":[{\"segment\":{\"destination\":\"DTW\",\"origin\":\"LAX\"},\"bookingCode\":\"Q\",\"cabin\":\"COACH\"}],\"ptcs\":[\"ADT\"],\"carrier\":\"DL\",\"code\":\"QF7OA0MQ\",\"destinationCity\":\"DTT\",\"displayAdjustedPrice\":\"USD423.25\",\"key\":\"0/1\",\"originCity\":\"LAX\",\"tag\":\"ROUND-TRIP\"},{\"bookingInfos\":[{\"segment\":{\"destination\":\"ATL\",\"origin\":\"DTW\"},\"bookingCode\":\"K\",\"cabin\":\"COACH\"}],\"ptcs\":[\"ADT\"],\"carrier\":\"DL\",\"code\":\"KAUQA0MQ\",\"destinationCity\":\"ATL\",\"displayAdjustedPrice\":\"USD264.19\",\"key\":\"0/2\",\"originCity\":\"DTT\",\"tag\":\"ONE-WAY\"}],\"notes\":[\"This ticket is non-refundable.\"],\"displayPrice\":\"USD955.20\"}],\"displayPrice\":\"USD955.20\"}],\"displayTotal\":\"USD955.20\",\"id\":\"3QbyN8qR1w7MVmFwovbODH00L\",\"passengerCount\":1}";
+    let parsed_json = JSON.parse(input_json);
+    let urlComponents = [];
+    var fareBasis = [];
+    var itinSegments = [];
+    var flight_idx = 0;
+    var seg_idx = 0;
+    let slices = parsed_json['itinerary']['slices'];
+    let start_city = "";
+    let end_city = "";
+    for (let i=0; i<slices.length; i++) {
+        let slice = slices[i];
+        var flightArray = [];
+        for (let j = 0; j < slice['segments'].length; j++) {
+            let flight = slice['segments'][j];
+            var segment = "";
+            segment = "itinSegment%5B" + seg_idx.toString() + "%5D=" + flight_idx.toString() + ":";
+            segment += flight['bookingInfos'][0]['bookingCode'] + ":";
+            segment += flight['legs'][0]['origin']['code'] + ":";
+            segment += flight['legs'][0]['destination']['code'] + ":";
+            segment += flight['carrier']['code'] + ":";
+            segment += flight['flight']['number'].toString() + ":";
+            let depDate = new Date(flight['legs'][0]['departure'].slice(0,-6));
+            let depHr = getHourString(depDate.getHours());
+            let depYr = depDate.getFullYear().toString();
+            let depDay = depDate.getDate().toString().padStart(2, '0');
+            let depMo = getMonthString(depDate.getMonth());
+            segment += depMo + ":" + depDay + ":" + depYr + ":" + depHr;
+            flightArray.push(segment);
+            seg_idx += 1;
+            if (i===0 && j===0) {
+                start_city = flight['legs'][0]['origin']['code'];
+            }
+            end_city = flight['legs'][0]['destination']['code'];
+        }
+        flight_idx += 1;
+        itinSegments.push(flightArray.join("&"));
+    }
+    // This has to go first because &curren is a html symbol
+    urlComponents.push("currencyCd=" + (parsed_json['displayTotal'].slice(0,3)));
+    urlComponents.push(itinSegments.join("&"));
+    urlComponents.push("numOfSegments=" + seg_idx.toString());
+    /*
+    if (itinSegments.length === 1) {
+        urlComponents.push("tripType=oneWay");
+    } else {
+        if (itinSegment.length === 2 && start_city.localeCompare(end_city) === 0) {
+            urlComponents.push("tripType=roundTrip");
+        } else {
+            urlComponents.push("tripType=multiCity");
+        }
+    }
+     */
+    urlComponents.push("tripType=" + document.getElementById("triptype").value);
+    let fare_components = parsed_json['tickets'][0]['pricings'][0]['fares'];
+    for (let i=0; i < fare_components.length; i++) {
+        for (let j=0; j<fare_components[i]['bookingInfos'].length; j++) {
+            fareBasis.push(fare_components[i]['code']);
+        }
+    }
+    urlComponents.push("fareBasis=" + fareBasis.join(":"));
+    urlComponents.push("cabin=" + document.getElementById("cabin").value);
+    urlComponents.push("price=" + parsed_json['displayTotal'].slice(3));
+    urlComponents.push("exitCountry=US&mkcpgn=MS_GFSR_DESK_INTL_TR_DL_140414_GFSDESK_US&vendorRedirectFlag=true&vendorID=Google")
+    urlComponents.push("paxCount=" + parsed_json['passengerCount'].toString());
+    let final_url = "https://www.delta.com/flight-search/search?" + urlComponents.join("&");
+    document.getElementById('link').innerHTML = "Link (try incognito): <a href=\"" + final_url + "\">" + final_url + "</a>";
+}
+</script>
+
+</body>
+</html>
